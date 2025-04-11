@@ -104,6 +104,4 @@ packages/
 
 # dotnet watch/ef
 **/appsettings.*.json.user***
-appsettings.Development.json
 .env
-appsettings.Development.json

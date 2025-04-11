@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SarlApp.Data;
 
@@ -10,9 +11,11 @@ using SarlApp.Data;
 namespace SarlApp.Migrations
 {
     [DbContext(typeof(DbContextSarl))]
-    partial class DbContextSarlModelSnapshot : ModelSnapshot
+    [Migration("20250411202024_SeedCategoryTable")]
+    partial class SeedCategoryTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
