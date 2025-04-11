@@ -1,7 +1,16 @@
+using SarlApp.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add DBContext class here
+// Connexion string
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+DbConnectionSarl dbConnection = new DbConnectionSarl(new MySQLConnection(connectionString));
+builder = dbConnection.Connect(builder);
+
 
 var app = builder.Build();
 
@@ -14,16 +23,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
-
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
