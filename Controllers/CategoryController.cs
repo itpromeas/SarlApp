@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SarlApp.Data;
+using SarlApp.Models;
 
 namespace SarlApp.Controllers
 {
@@ -24,6 +25,20 @@ namespace SarlApp.Controllers
         {
             var categories = _db.Categories.ToList();
             return View(categories);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(CategoryModel item)
+        {
+            _db.Categories.Add(item);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+            // return RedirectToAction("Index", Category); // since we are in the same controller, we do not need to add the controller here
         }
     }
 }

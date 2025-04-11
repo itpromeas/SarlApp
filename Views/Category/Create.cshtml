@@ -1,0 +1,35 @@
+@model CategoryModel
+
+<form method="post" class="form-horizontal">
+    <div class="border p-3 mt-4">
+        <h2 class="text-primary">Create Category</h2>
+        <hr>
+    </div>
+    <fieldset>
+        <div class="form-group">
+            @* <label for="" class="col-lg-2 control-label p-0">Category Name</label> *@
+            @* <label asp-for="Name" class="col-lg-2 control-label p-0">(The name will automatically display here)</label> *@
+            <label asp-for="Name" class="col-lg-2 control-label p-0"></label>
+            <div class="col-lg-10">
+                <input asp-for="Name" class="form-control" placeholder="Category Name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DisplayOrder" class="col-lg-2 control-label"></label>
+            <div class="col-lg-10">
+                <input asp-for="DisplayOrder"  class="form-control" placeholder="Category Order">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary">Create</button>
+                <a asp-controller="Category" asp-action="Index" class="btn btn-secondary">
+                    Back to List
+                </a>
+            
+            </div>
+        </div>
+    </fieldset>
+</form>
