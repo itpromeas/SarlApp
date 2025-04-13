@@ -40,6 +40,7 @@ namespace RazorApp.Pages.Categories
             }
             _db.Categories.Remove(Category);
             _db.SaveChanges();
+            TempData["success"] = "Category deleted successfully";
             return RedirectToPage("Index");
         }
 
