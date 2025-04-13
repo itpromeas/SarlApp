@@ -1,6 +1,10 @@
-# how to create MVC dotnet app via terminal
+# How to create MVC dotnet app via terminal
 
 dotnet new mvc -n MyMvcApp
+
+# How to create razor dotnet app via terminal
+
+dotnet new razor -n MyMvcApp
 
 # to run the app
 
@@ -72,3 +76,57 @@ use toastr to display a toast for info, success, warning or error
 
 // Display an info toast with no title
 toastr.info('Are you the 6 fingered man?')
+
+
+
+
+# Multiple App in one solution
+
+1. App 1
+dotnet new sln -n MySolution
+cd MySolution
+
+dotnet new mvc -n MVCWebApp
+
+//add it to the solution
+
+dotnet sln add MVCWebApp/MVCWebApp.csproj
+
+
+## To build the whole solution
+dotnet build
+
+## To run a specific project
+
+## How to add package in multiple project solution .net
+
+dotnet add WebApp/WebApp.csproj package <PackageName>
+dotnet add ApiService/ApiService.csproj package <PackageName>
+dotnet add MyLibrary/MyLibrary.csproj package <PackageName>
+
+example:
+
+dotnet add MVCWebApp/MVCWebApp.csproj package Microsoft.EntityFrameworkCore  
+
+## How to add migration in multiple project solution .net
+
+dotnet ef migrations add <MigrationName> --project <DbContextProject> --startup-project <StartupProject>
+dotnet ef database update --project DataAccess --startup-project WebApp
+
+Example:
+
+dotnet ef migrations add InitialMigration --project MVCWebApp --startup-project MVCWebApp 
+dotnet ef database update --project MVCWebApp --startup-project MVCWebApp
+
+
+
+--project: Points to the project containing your DbContext
+--startup-project: Points to the project that contains the app entry point (e.g., Razor or API)
+
+## How to run a specific app in multiple project solution .net
+
+dotnet run --project <PathToProject>
+
+Example:
+
+dotnet run --project MVCWebApp/MVCWebApp.csproj

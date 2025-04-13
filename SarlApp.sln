@@ -1,24 +1,22 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.5.2.0
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SarlApp", "SarlApp.csproj", "{6EBDE015-92BB-235F-D5CB-99EF55C5E910}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCWebApp", "MVCWebApp\MVCWebApp.csproj", "{18A96E49-D554-4814-A439-CB7CF8869D18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6EBDE015-92BB-235F-D5CB-99EF55C5E910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6EBDE015-92BB-235F-D5CB-99EF55C5E910}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6EBDE015-92BB-235F-D5CB-99EF55C5E910}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6EBDE015-92BB-235F-D5CB-99EF55C5E910}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {68E8A3CA-F090-4E00-B202-858C3C71B0BF}
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18A96E49-D554-4814-A439-CB7CF8869D18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18A96E49-D554-4814-A439-CB7CF8869D18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18A96E49-D554-4814-A439-CB7CF8869D18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18A96E49-D554-4814-A439-CB7CF8869D18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
