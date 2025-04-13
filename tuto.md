@@ -21,6 +21,15 @@ dotnet ef migrations add InitialMigration
 dotnet ef database update
 
 
+# How to create library dotnet app via terminal
+
+dotnet new classlib -n MyLibrary
+
+
+example:
+
+dotnet new classlib -n MVCWebApp.DataAccess
+
 # partial validation
 In Order to add javascript validation, we can use Validation partial script defined in shared 
 
@@ -145,3 +154,26 @@ dotnet run --project RazorApp/RazorApp.csproj
 ### Migration
 dotnet ef migrations add AddCategoryToDB --project RazorApp --startup-project RazorApp
 dotnet ef database update --project RazorApp --startup-project RazorApp
+
+
+## Specific to Razor page
+
+1. We do not use again asp-controller asp-action
+
+<a asp-page="Categories/Edit" asp-route-id="@item.Id" class="btn btn-info mx-2">
+    <i class="bi bi-pencil-square"></i> Edit
+</a>
+
+instead of 
+
+<a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info mx-2">
+    <i class="bi bi-pencil-square"></i> Edit
+</a>
+
+2. Always put *On* infront of the method name in .cs file
+
+public void *OnGet()*
+{
+    CategoryList = _db.Categories.ToList();
+}
+
