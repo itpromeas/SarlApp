@@ -51,3 +51,24 @@ add *<input asp-for="Id" hidden />* in order not to create a new category in edi
 
 # TempData
 only stay for one instance... then goes away
+
+# Notification
+
+It is better to add a common partial view in _Layout in order to be used in all pages
+
+# toastr
+
+https://codeseven.github.io/toastr/
+
+3 Easy Steps
+
+For other API calls, see the demo.
+
+Link to toastr.css <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+
+Link to toastr.js <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+use toastr to display a toast for info, success, warning or error
+
+// Display an info toast with no title
+toastr.info('Are you the 6 fingered man?')
