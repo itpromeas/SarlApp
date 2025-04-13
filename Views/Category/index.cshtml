@@ -18,22 +18,29 @@
 <table class="table table-bordered table-striped">
      <thead>
         <tr>
-            <th>
-                Category Name
-            </th>
-            <th>
-                Display Order
-            </th>
+            <th> Category Name </th>
+            <th> Display Order </th>
+            <th> Edit </th>
         </tr>
      </thead>
 
      <tbody>
-        @foreach(var obj in Model.OrderBy(u=>u.DisplayOrder))
+        @foreach(var item in Model.OrderBy(u=>u.DisplayOrder))
         {
             <tr>
-                <td>@obj.Name</td>
+                <td>@item.Name</td>
+                <td> @item.DisplayOrder </td>
                 <td>
-                    @obj.DisplayOrder
+                    <div class="w-75 btn-group">
+                        <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info mx-2">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                    </div>
+                    <div class="w-75 btn-group">
+                        <a asp-controller="Category" asp-action="Delete" class="btn btn-danger mx-2">
+                            <i class="bi bi-trash-fill"></i> Delete
+                        </a>
+                    </div>
                 </td>
             </tr>
         }

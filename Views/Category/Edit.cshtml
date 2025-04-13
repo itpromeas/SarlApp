@@ -1,0 +1,45 @@
+@model CategoryModel
+
+<form method="post" class="form-horizontal">
+    <input asp-for="Id" hidden />
+    <div class="border p-3 mt-4">
+        <h2 class="text-primary">Edit Category</h2>
+        <hr>
+    </div>
+    <div asp-validation-summary="All"></div>
+    <fieldset>
+        <div class="form-group">
+            @* <label for="" class="col-lg-2 control-label p-0">Category Name</label> *@
+            @* <label asp-for="Name" class="col-lg-2 control-label p-0">(The name will automatically display here)</label> *@
+            <label asp-for="Name" class="col-lg-2 control-label p-0"></label>
+            <div class="col-lg-10">
+                <input asp-for="Name" class="form-control" placeholder="Category Name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DisplayOrder" class="col-lg-2 control-label"></label>
+            <div class="col-lg-10">
+                <input asp-for="DisplayOrder"  class="form-control" placeholder="Category Order">
+                <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a asp-controller="Category" asp-action="Index" class="btn btn-secondary">
+                    Back to List
+                </a>
+            
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial"/>
+    }
+}
