@@ -57,6 +57,8 @@ namespace SarlApp.Controllers
                 _db.Categories.Add(item);
                 _db.SaveChanges();
 
+                TempData["success"] = "Category created succesfully";
+
                 return RedirectToAction("Index");
             // return RedirectToAction("Index", Category); // since we are in the same controller, we do not need to add the controller here
             }
@@ -90,6 +92,8 @@ namespace SarlApp.Controllers
             {
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category updated succesfully";
+
                 return RedirectToAction("Index");
             }
             return View();
@@ -121,6 +125,8 @@ namespace SarlApp.Controllers
             }
             _db.Categories.Remove(obj);
             _db.SaveChanges();
+            TempData["success"] = "Category deleted succesfully";
+
             return RedirectToAction("Index");
         }
         

@@ -48,3 +48,6 @@ asp-route-categoryId="@item.Id"
 # edit
 
 add *<input asp-for="Id" hidden />* in order not to create a new category in edit
+
+# TempData
+only stay for one instance... then goes away
