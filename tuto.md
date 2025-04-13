@@ -137,3 +137,11 @@ dotnet run --project MVCWebApp/MVCWebApp.csproj
 
 dotnet new razor -n RazorApp
 dotnet sln add RazorApp/RazorApp.csproj
+
+dotnet run --project RazorApp/RazorApp.csproj  
+
+
+
+### Migration
+dotnet ef migrations add AddCategoryToDB --project RazorApp --startup-project RazorApp
+dotnet ef database update --project RazorApp --startup-project RazorApp

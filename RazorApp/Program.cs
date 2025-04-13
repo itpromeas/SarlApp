@@ -1,7 +1,15 @@
+using RazorApp.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Add DBContext class here
+// Connexion string
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+DbConnectionRazorSarl dbConnection = new DbConnectionRazorSarl(new MySQLConnection(connectionString));
+builder = dbConnection.Connect(builder);
 
 var app = builder.Build();
 

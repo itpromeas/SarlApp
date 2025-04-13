@@ -9,7 +9,7 @@ namespace MVCWebApp.Data
 {
     public class DbContextMVCSarl : DbContext
     {
-         public DbContextMVCSarl(DbContextOptions<DbContextMVCSarl> options) : base(options)
+        public DbContextMVCSarl(DbContextOptions<DbContextMVCSarl> options) : base(options)
         {
         
         }
