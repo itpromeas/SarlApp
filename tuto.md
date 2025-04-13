@@ -16,3 +16,13 @@ dotnet ef migrations add InitialMigration
 
 dotnet ef database update
 
+
+# partial validation
+In Order to add javascript validation, we can use Validation partial script defined in shared 
+
+
+@section Script{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

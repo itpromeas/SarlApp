@@ -14,9 +14,11 @@ namespace SarlApp.Models
 
         [DisplayName("Category Name")]
         [Required]
+        [MaxLength(50)]
         public required string Name { get; set; }
 
         [DisplayName("Category Order")]
+        [Range(1,100, ErrorMessage = "Display Order must be between 1-100!")] // this is a custom validation message
         public int DisplayOrder { get; set; }
     }
 }

@@ -35,10 +35,32 @@ namespace SarlApp.Controllers
         [HttpPost]
         public IActionResult Create(CategoryModel item)
         {
-            _db.Categories.Add(item);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if(item.DisplayOrder < 1 || item.DisplayOrder > 100){
+                ModelState.AddModelError("DisplayOrder", "The Display Name must be between 1 and 100");
+            }
+
+            if(item.Name == item.DisplayOrder.ToString()){
+                ModelState.AddModelError("name", "The DisplaName cannot exactly match the Name.");
+            }
+
+            if(item.Name == null){
+                ModelState.AddModelError("name", "The DisplaName should not be empty.");
+            }
+            else {
+                if(item.Name.Equals("test", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    ModelState.AddModelError("", "The Displ cannot exactly match the Name.");
+                }
+            }
+
+            if(ModelState.IsValid){
+                _db.Categories.Add(item);
+                _db.SaveChanges();
+
+                return RedirectToAction("Index");
             // return RedirectToAction("Index", Category); // since we are in the same controller, we do not need to add the controller here
+            }
+            return View();
         }
     }
 }
