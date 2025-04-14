@@ -4,21 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using MVCWebApp.DataAccess.Data;
 using MVCWebApp.DataAccess.Repository.IRepository;
-using MVCWebApp.Models;
 
 namespace MVCWebApp.DataAccess.Repository
 {
-    public class CategoryRepository : Repository<CategoryModel>, ICategoryRepository
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContextMVCSarl _db;
-        public CategoryRepository(DbContextMVCSarl db) : base(db)
+        public ICategoryRepository Category {get; private set;}
+
+        public UnitOfWork(DbContextMVCSarl db)
         {
             _db = db;
+            Category = new CategoryRepository(_db);
         }
 
-        public void Update(CategoryModel item)
+        public void Save()
         {
-            _db.Categories.Update(item);
+            _db.SaveChanges();
         }
     }
 }

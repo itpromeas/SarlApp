@@ -13,7 +13,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 DbConnectionMVCSarl dbConnection = new DbConnectionMVCSarl(new MySQLConnection(connectionString));
 builder = dbConnection.Connect(builder);
 
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
