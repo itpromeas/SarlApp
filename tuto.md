@@ -155,6 +155,9 @@ dotnet run --project RazorApp/RazorApp.csproj
 dotnet ef migrations add AddCategoryToDB --project RazorApp --startup-project RazorApp
 dotnet ef database update --project RazorApp --startup-project RazorApp
 
+### Adding reference
+dotnet add reference ../MVCWebApp.Models/MVCWebApp.Models.csproj 
+
 
 ## Specific to Razor page
 

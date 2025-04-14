@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MVCWebApp.Data;
+using MVCWebApp.DataAccess.Data;
 using MVCWebApp.Models;
 
 namespace MVCWebApp.Controllers

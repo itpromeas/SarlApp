@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace MVCWebApp.Migrations
+namespace MVCWebApp.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration

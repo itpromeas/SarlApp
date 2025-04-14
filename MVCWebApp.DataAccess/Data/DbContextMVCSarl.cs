@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MVCWebApp.Models;
 
-namespace MVCWebApp.Data
+namespace MVCWebApp.DataAccess.Data
 {
     public class DbContextMVCSarl : DbContext
     {

@@ -1,4 +1,4 @@
-using MVCWebApp.Data;
+using MVCWebApp.DataAccess.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
