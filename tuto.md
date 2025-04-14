@@ -180,3 +180,14 @@ public void *OnGet()*
     CategoryList = _db.Categories.ToList();
 }
 
+
+# Dependency Injection Service Lifetimes
+
+- Transient
+New Service - every time requested
+
+- Scoped (recommended)
+New Service - once per request
+
+- Singleton
+New Service - once per application lifetime

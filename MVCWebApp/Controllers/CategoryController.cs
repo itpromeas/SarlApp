@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MVCWebApp.DataAccess.Data;
+using MVCWebApp.DataAccess.Repository.IRepository;
 using MVCWebApp.Models;
 
 namespace MVCWebApp.Controllers
@@ -13,18 +14,17 @@ namespace MVCWebApp.Controllers
     public class CategoryController : Controller
     {
         private readonly ILogger<CategoryController> _logger;
-        private readonly DbContextMVCSarl _db;
+        private readonly ICategoryRepository _categorRepo;
 
-        public CategoryController(ILogger<CategoryController> logger, DbContextMVCSarl db)
+        public CategoryController(ILogger<CategoryController> logger, ICategoryRepository db)
         {
             _logger = logger;
-            _db = db;
+            _categorRepo = db;
         }
 
         public IActionResult Index()
         {
-            var categories = _db.Categories.ToList();
-            return View(categories);
+            return View(_categorRepo.GetAll());
         }
 
         public IActionResult Create()
@@ -54,8 +54,8 @@ namespace MVCWebApp.Controllers
             }
 
             if(ModelState.IsValid){
-                _db.Categories.Add(item);
-                _db.SaveChanges();
+                _categorRepo.Add(item);
+                _categorRepo.Save();
 
                 TempData["success"] = "Category created succesfully";
 
@@ -71,7 +71,7 @@ namespace MVCWebApp.Controllers
                 return NotFound();
             
             //CategoryModel? categoryFromDb = _db.Categories.Find(id);
-            CategoryModel? categoryFromDb = _db.Categories.FirstOrDefault(u => u.Id == id);
+            CategoryModel? categoryFromDb = _categorRepo.GetFirstOrDefault(u => u.Id == id);
             //CategoryModel? categoryFromDb2 = _db.Categories.Where(u=>u.Id==id).FirstOrDefault();
 
             if (categoryFromDb == null)
@@ -90,8 +90,8 @@ namespace MVCWebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _categorRepo.Update(obj);
+                _categorRepo.Save();
                 TempData["success"] = "Category updated succesfully";
 
                 return RedirectToAction("Index");
@@ -106,7 +106,7 @@ namespace MVCWebApp.Controllers
             {
                 return NotFound();
             }
-            CategoryModel? categoryFromDb = _db.Categories.FirstOrDefault(u=>u.Id==id);
+            CategoryModel? categoryFromDb = _categorRepo.GetFirstOrDefault(u=>u.Id==id);
 
             if (categoryFromDb == null)
             {
@@ -118,13 +118,13 @@ namespace MVCWebApp.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            CategoryModel? obj = _db.Categories.Find(id);
+            CategoryModel? obj = _categorRepo.GetFirstOrDefault(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _db.Categories.Remove(obj);
-            _db.SaveChanges();
+            _categorRepo.Remove(obj);
+            _categorRepo.Save();
             TempData["success"] = "Category deleted succesfully";
 
             return RedirectToAction("Index");

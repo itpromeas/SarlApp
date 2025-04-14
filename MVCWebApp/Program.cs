@@ -1,4 +1,6 @@
 using MVCWebApp.DataAccess.Data;
+using MVCWebApp.DataAccess.Repository;
+using MVCWebApp.DataAccess.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 DbConnectionMVCSarl dbConnection = new DbConnectionMVCSarl(new MySQLConnection(connectionString));
 builder = dbConnection.Connect(builder);
 
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 
