@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCWebApp.DataAccess.Migrations
 {
     [DbContext(typeof(DbContextMVCSarl))]
-    [Migration("20250415064530_AddForeignKeyInProductTable")]
+    [Migration("20250415092159_AddForeignKeyInProductTable")]
     partial class AddForeignKeyInProductTable
     {
         /// <inheritdoc />
@@ -111,7 +111,7 @@ namespace MVCWebApp.DataAccess.Migrations
                         {
                             Id = 1,
                             Author = "Ange",
-                            CategoryId = 0,
+                            CategoryId = 2,
                             ListPrice = 1.0,
                             Price = 10.0,
                             Price100 = 7.5,
@@ -122,7 +122,7 @@ namespace MVCWebApp.DataAccess.Migrations
                         {
                             Id = 2,
                             Author = "Salome",
-                            CategoryId = 0,
+                            CategoryId = 3,
                             ListPrice = 1.0,
                             Price = 2210.0,
                             Price100 = 1557.5,

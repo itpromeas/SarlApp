@@ -27,8 +27,8 @@ namespace MVCWebApp.DataAccess.Data
             );
 
             modelBuilder.Entity<ProductModel>().HasData(
-                new ProductModel { Id = 1, Title = "Product 1", ListPrice = 1, Price = 10, Price50=9, Price100=7.5, Author="Ange", CategoryId = 2 },
-                new ProductModel { Id = 2, Title = "Product 2", ListPrice = 1, Price = 2210, Price50=2000, Price100=1557.5, Author="Salome", CategoryId = 3 }
+                new ProductModel { Id = 1, Title = "Product 1", ListPrice = 1, Price = 10, Price50=9, Price100=7.5, Author="Ange", CategoryId = 2, ImageUrl = "" },
+                new ProductModel { Id = 2, Title = "Product 2", ListPrice = 1, Price = 2210, Price50=2000, Price100=1557.5, Author="Salome", CategoryId = 3, ImageUrl = "" }
             );
         }
     }
