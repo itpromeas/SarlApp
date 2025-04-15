@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVCWebApp.Models
 {
@@ -40,5 +41,10 @@ namespace MVCWebApp.Models
         public double Price100 { get; set; }
 
         public string Author { get; set; }
+
+
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public CategoryModel Category { get; set; }
     }
 }
