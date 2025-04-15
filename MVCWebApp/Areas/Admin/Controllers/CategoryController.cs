@@ -9,8 +9,9 @@ using MVCWebApp.DataAccess.Data;
 using MVCWebApp.DataAccess.Repository.IRepository;
 using MVCWebApp.Models;
 
-namespace MVCWebApp.Controllers
+namespace MVCWebApp.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly ILogger<CategoryController> _logger;
