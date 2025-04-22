@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MVCWebApp.DataAccess.Repository.IRepository;
 using MVCWebApp.Models;
 
@@ -23,6 +24,14 @@ namespace MVCWebApp.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> categories = _unitOfWork.Category
+                .GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+
+            ViewBag.CategoryList = categories;
             return View();
         }
 
