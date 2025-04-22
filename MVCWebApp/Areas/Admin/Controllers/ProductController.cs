@@ -31,7 +31,8 @@ namespace MVCWebApp.Areas.Admin.Controllers
                     Value = u.Id.ToString()
                 });
 
-            ViewBag.CategoryList = categories;
+            //ViewBag.CategoryList = categories;
+            ViewData["Categories"] = categories;
             return View();
         }
 
