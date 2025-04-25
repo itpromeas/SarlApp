@@ -3,6 +3,8 @@ using MVCWebApp.DataAccess.Repository;
 using MVCWebApp.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using MVCWebApp.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,13 +20,18 @@ DbConnectionMVCSarl dbConnection = new DbConnectionMVCSarl(new MySQLConnection(c
 builder = dbConnection.Connect(builder);
 
 // identity user
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DbContextMVCSarl>();
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DbContextMVCSarl>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<DbContextMVCSarl>().AddDefaultTokenProviders();
+
 
 // razor page
 builder.Services.AddRazorPages();
 
 // unit of work service
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// for email
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
