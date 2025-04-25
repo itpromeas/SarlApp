@@ -21,7 +21,12 @@ namespace MVCWebApp.DataAccess.Data
 
         public DbSet<Company> Companies { get; set; }
 
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
         public DbSet<SarlUser> SarlUsers { get; set; }
+
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
         // this is to create some Dummy Data in the database
         protected override void OnModelCreating(ModelBuilder modelBuilder)

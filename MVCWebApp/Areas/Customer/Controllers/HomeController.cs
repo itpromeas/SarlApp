@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using MVCWebApp.DataAccess.Repository.IRepository;
 using MVCWebApp.Models;
@@ -25,8 +27,44 @@ public class HomeController : Controller
 
     public IActionResult Details(int productId) // this variable should match with the html asp-route-productId
     {
-        ProductModel product = _unitOfWork.Product.GetFirstOrDefault(u => u.Id == productId, includeProperties: "Category");
-        return View(product);
+        ShoppingCart cart = new()
+        {
+            Product = _unitOfWork.Product.GetFirstOrDefault(u => u.Id == productId, includeProperties: "Category"),
+            Count = 1,
+            ProductId = productId
+        };
+        return View(cart);
+    }
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult Details(ShoppingCart shoppingCart)
+    {
+        var claimsIdentity = (ClaimsIdentity)User.Identity;
+        var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+        shoppingCart.SarlUserId = userId;
+
+        ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(
+            u => u.SarlUserId == userId && u.ProductId == shoppingCart.ProductId);
+
+        if (cartFromDb != null)
+        {
+            //shopping cart exists
+            cartFromDb.Count += shoppingCart.Count;
+            _unitOfWork.ShoppingCart.Update(cartFromDb);
+        }
+        else
+        {
+            //add cart record
+            _unitOfWork.ShoppingCart.Add(shoppingCart);
+        }
+
+        TempData["success"] = "Cart updated successfully";
+
+        _unitOfWork.Save();
+
+
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Privacy()
