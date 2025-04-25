@@ -20,6 +20,9 @@ builder = dbConnection.Connect(builder);
 // identity user
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DbContextMVCSarl>();
 
+// razor page
+builder.Services.AddRazorPages();
+
 // unit of work service
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -37,8 +40,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
