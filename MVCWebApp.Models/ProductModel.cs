@@ -19,6 +19,7 @@ namespace MVCWebApp.Models
         [Required]
         [MaxLength(50)]
         public string Title { get; set; }
+
         public string? Description { get; set; }
 
         [Required]
@@ -44,8 +45,8 @@ namespace MVCWebApp.Models
         public string Author { get; set; }
 
         public int CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
 
+        [ForeignKey("CategoryId")]
         [ValidateNever]
         public CategoryModel Category { get; set; }
 

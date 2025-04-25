@@ -155,6 +155,9 @@ dotnet run --project RazorApp/RazorApp.csproj
 dotnet ef migrations add AddCategoryToDB --project RazorApp --startup-project RazorApp
 dotnet ef database update --project RazorApp --startup-project RazorApp
 
+- in visual studio
+Add-Migration InitialCreate 
+
 ### Adding reference
 dotnet add reference ../MVCWebApp.Models/MVCWebApp.Models.csproj 
 
@@ -191,3 +194,11 @@ New Service - once per request
 
 - Singleton
 New Service - once per application lifetime
+
+# Reach Text MVC
+
+https://www.tiny.cloud/my-account/integrate/#html
+
+# sweetalert
+
+https://sweetalert2.github.io/
