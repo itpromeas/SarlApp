@@ -1,6 +1,8 @@
 using MVCWebApp.DataAccess.Data;
 using MVCWebApp.DataAccess.Repository;
 using MVCWebApp.DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +12,15 @@ builder.Services.AddControllersWithViews();
 // Add DBContext class here
 // Connexion string
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// DB connect
 DbConnectionMVCSarl dbConnection = new DbConnectionMVCSarl(new MySQLConnection(connectionString));
 builder = dbConnection.Connect(builder);
 
+// identity user
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DbContextMVCSarl>();
+
+// unit of work service
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();

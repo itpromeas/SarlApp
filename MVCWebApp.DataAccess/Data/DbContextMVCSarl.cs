@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MVCWebApp.Models;
 
 namespace MVCWebApp.DataAccess.Data
 {
-    public class DbContextMVCSarl : DbContext
+    public class DbContextMVCSarl : IdentityDbContext<IdentityUser>
     {
         public DbContextMVCSarl(DbContextOptions<DbContextMVCSarl> options) : base(options)
         {
@@ -20,6 +22,8 @@ namespace MVCWebApp.DataAccess.Data
         // this is to create some Dummy Data in the database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder); // we must put this when using IdentityDbContext
+
             modelBuilder.Entity<CategoryModel>().HasData(
                 new CategoryModel{Id = 1, Name = "Online Class", DisplayOrder = 1},
                 new CategoryModel{Id = 2, Name = "Real Estate", DisplayOrder = 2},
