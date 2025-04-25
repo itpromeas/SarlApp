@@ -4,6 +4,7 @@ using MVCWebApp.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCWebApp.DataAccess.Migrations
 {
     [DbContext(typeof(DbContextMVCSarl))]
-    partial class DbContextMVCSarlModelSnapshot : ModelSnapshot
+    [Migration("20250425182222_addCompanyTable")]
+    partial class addCompanyTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -410,9 +413,6 @@ namespace MVCWebApp.DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -425,8 +425,6 @@ namespace MVCWebApp.DataAccess.Migrations
 
                     b.Property<string>("StreetAddress")
                         .HasColumnType("longtext");
-
-                    b.HasIndex("CompanyId");
 
                     b.HasDiscriminator().HasValue("SarlUser");
                 });
@@ -491,15 +489,6 @@ namespace MVCWebApp.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MVCWebApp.Models.SarlUser", b =>
-                {
-                    b.HasOne("MVCWebApp.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }
