@@ -5,6 +5,7 @@ using MVCWebApp.DataAccess.Repository.IRepository;
 using MVCWebApp.Models;
 using MVCWebApp.Models.ViewModels;
 using MVCWebApp.Utility;
+using Stripe.Checkout;
 
 namespace MVCWebApp.Areas.Customer.Controllers
 {
@@ -89,7 +90,7 @@ namespace MVCWebApp.Areas.Customer.Controllers
             ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;
             ShoppingCartVM.OrderHeader.SarlUserId = userId;
 
-            SarlUser applicationUser = _unitOfWork.SarlUser.GetFirstOrDefault(u => u.Id == userId);
+            SarlUser sarlUser = _unitOfWork.SarlUser.GetFirstOrDefault(u => u.Id == userId);
 
 
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
@@ -98,7 +99,7 @@ namespace MVCWebApp.Areas.Customer.Controllers
                 ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
             }
 
-            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
+            if (sarlUser.CompanyId.GetValueOrDefault() == 0)
             {
                 //it is a regular customer 
                 ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
@@ -112,6 +113,7 @@ namespace MVCWebApp.Areas.Customer.Controllers
             }
             _unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
             _unitOfWork.Save();
+            
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 OrderDetail orderDetail = new()
@@ -125,10 +127,49 @@ namespace MVCWebApp.Areas.Customer.Controllers
                 _unitOfWork.Save();
             }
 
-            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
+            if (sarlUser.CompanyId.GetValueOrDefault() == 0)
             {
                 //it is a regular customer account and we need to capture payment
                 //stripe logic
+                //it is a regular customer account and we need to capture payment
+                //stripe logic
+                var domain = LinkUtils.DomainUrl;
+                var options = new SessionCreateOptions
+                {
+                    SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
+                    CancelUrl = domain + "customer/cart/index",
+                    LineItems = new List<SessionLineItemOptions>(),
+                    Mode = "payment",
+                };
+
+                foreach (var item in ShoppingCartVM.ShoppingCartList)
+                {
+                    var sessionLineItem = new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)(item.Price * 100), // $20.50 => 2050
+                            Currency = "usd",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = item.Product.Title
+                            }
+                        },
+                        Quantity = item.Count
+                    };
+                    options.LineItems.Add(sessionLineItem);
+                }
+
+
+                var service = new SessionService();
+                Session session = service.Create(options);
+
+                _unitOfWork.OrderHeader.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                _unitOfWork.Save();
+
+                Response.Headers.Add("Location", session.Url);
+
+                return new StatusCodeResult(303);
             }
 
             return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
@@ -137,6 +178,39 @@ namespace MVCWebApp.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == id, includeProperties: "SarlUser");
+            if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+            {
+                //this is an order by customer
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+
+                /* see: https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-payment_status
+                    *Possible enum values*
+                    - no_payment_required: The payment is delayed to a future date, or the Checkout Session is in setup mode and doesn’t require a payment at this time.
+
+                    - paid: The payment funds are available in your account.
+
+                    - unpaid: The payment funds are not yet available in your account.
+
+
+                 */
+                if (session.PaymentStatus.ToLower() == "paid")
+                {
+                    _unitOfWork.OrderHeader.UpdateStripePaymentID(id, session.Id, session.PaymentIntentId);
+                    _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
+                    _unitOfWork.Save();
+                }
+
+
+            }
+
+            // empty the shopping cart
+            List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.SarlUserId == orderHeader.SarlUserId).ToList();
+
+            _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
+            _unitOfWork.Save();
+            
             return View(id);
         }
 

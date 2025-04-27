@@ -202,3 +202,7 @@ https://www.tiny.cloud/my-account/integrate/#html
 # sweetalert
 
 https://sweetalert2.github.io/
+
+# Stripe API
+
+https://docs.stripe.com/api/checkout/sessions/create
