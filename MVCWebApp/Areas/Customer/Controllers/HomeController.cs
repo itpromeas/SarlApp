@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using MVCWebApp.DataAccess.Repository.IRepository;
 using MVCWebApp.Models;
+using MVCWebApp.Utility;
 
 namespace MVCWebApp.Areas.Customer.Controllers;
 
@@ -21,6 +22,17 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        var claimsIdentity = (ClaimsIdentity)User.Identity;
+        var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+        if (claim != null)
+        {
+            HttpContext.Session.SetInt32(
+                SD.SessionCart,
+                _unitOfWork.ShoppingCart.GetAll(u => u.SarlUserId == claim.Value).Count()
+            );
+        }
+
         IEnumerable<ProductModel> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
         return View(productList);
     }
@@ -52,17 +64,20 @@ public class HomeController : Controller
             //shopping cart exists
             cartFromDb.Count += shoppingCart.Count;
             _unitOfWork.ShoppingCart.Update(cartFromDb);
+            _unitOfWork.Save();
         }
         else
         {
             //add cart record
             _unitOfWork.ShoppingCart.Add(shoppingCart);
+            _unitOfWork.Save();
+            HttpContext.Session.SetInt32(
+                SD.SessionCart,
+                _unitOfWork.ShoppingCart.GetAll(u => u.SarlUserId == userId).Count()
+            );
         }
 
         TempData["success"] = "Cart updated successfully";
-
-        _unitOfWork.Save();
-
 
         return RedirectToAction(nameof(Index));
     }
