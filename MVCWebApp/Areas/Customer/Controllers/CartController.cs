@@ -202,7 +202,7 @@ namespace MVCWebApp.Areas.Customer.Controllers
                     _unitOfWork.Save();
                 }
 
-
+                HttpContext.Session.Clear();
             }
 
             // empty the shopping cart
