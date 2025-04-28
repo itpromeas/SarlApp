@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MVCWebApp.Models\MVCWebApp.Models.csproj" />
+    <ProjectReference Include="..\MVCWebApp.Utility\MVCWebApp.Utility.csproj" />
   </ItemGroup>
 
 </Project>
