@@ -206,3 +206,14 @@ https://sweetalert2.github.io/
 # Stripe API
 
 https://docs.stripe.com/api/checkout/sessions/create
+
+https://dashboard.stripe.com/test/
+
+https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-payment_status
+
+https://dashboard.stripe.com/test/payments/
+
+# ref github
+https://github.com/bhrugen?tab=repositories
+
+https://github.com/bhrugen/Bulky_MVC/commits/master/?before=13232546a00fc3c1dfaa22e0106b3758be673284+35
