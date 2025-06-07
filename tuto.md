@@ -204,6 +204,11 @@ https://www.tiny.cloud/my-account/integrate/#html
 https://sweetalert2.github.io/
 
 # Stripe API
+Most Common Stripe Test Card
+Card Number: 4242 4242 4242 4242
+Expiration Date: Any future date (e.g., 12/34)
+CVC: Any 3 digits (e.g., 123)
+ZIP Code: Any 5 digits (e.g., 12345)
 
 https://docs.stripe.com/api/checkout/sessions/create
 
@@ -212,6 +217,10 @@ https://dashboard.stripe.com/test/
 https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-payment_status
 
 https://dashboard.stripe.com/test/payments/
+
+# send Email: sendgrid
+
+TODO
 
 # ref github
 https://github.com/bhrugen?tab=repositories

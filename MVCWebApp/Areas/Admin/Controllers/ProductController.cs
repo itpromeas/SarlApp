@@ -62,7 +62,7 @@ namespace MVCWebApp.Areas.Admin.Controllers
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
-                    String pathDir = @"images\products";
+                    String pathDir = @"images/products";
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRootPath, pathDir);
 
@@ -82,7 +82,7 @@ namespace MVCWebApp.Areas.Admin.Controllers
                         file.CopyTo(fileStream);
                     }
 
-                    item.Product.ImageUrl = pathDir + @"\" + fileName;
+                    item.Product.ImageUrl = pathDir + @"/" + fileName;
                 }
 
                 if (item.Product.Title == null)
