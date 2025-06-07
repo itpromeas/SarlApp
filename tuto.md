@@ -218,9 +218,69 @@ https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-pay
 
 https://dashboard.stripe.com/test/payments/
 
-# send Email: sendgrid
+# send Email: MailKit
 
-TODO
+-- for one app
+dotnet add package MailKit
+
+-- multiple app
+dotnet add MVCWebApp.Utility/MVCWebApp.Utility.csproj package MailKit
+
+
+
+## good to know
+✅ Correct Way to Use Gmail SMTP with MailKit (C#)
+If you're using port 587, you must use STARTTLS, not SSL. Here's the correct code:
+
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
+
+var message = new MimeMessage();
+message.From.Add(new MailboxAddress("Your Name", "your-email@gmail.com"));
+message.To.Add(new MailboxAddress("Recipient Name", "recipient@example.com"));
+message.Subject = "Test Email from MailKit";
+
+message.Body = new TextPart("plain")
+{
+    Text = "Hello from MailKit!"
+};
+
+using (var client = new SmtpClient())
+{
+    // Use STARTTLS on port 587
+    await client.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+
+    // Use App Password, not your regular Gmail password
+    await client.AuthenticateAsync("your-email@gmail.com", "your-app-password");
+
+    await client.SendAsync(message);
+    await client.DisconnectAsync(true);
+}
+🔁 Alternative: Using Port 465 with SSL
+If you prefer SSL from the start (instead of STARTTLS), you can use port 465 like this:
+
+await client.ConnectAsync("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+But do not use port 465 with StartTls — it must be either:
+
+Port 587 + StartTls
+Port 465 + SslOnConnect
+🔐 Reminder:
+You must use an App Password if your Gmail account has 2-Step Verification enabled.
+
+Generate one here:
+👉 https://myaccount.google.com/apppasswords
+
+
+## Use Reputable SMTP Services (if sending programmatically)
+
+If you’re sending bulk or transactional emails, consider using services like:
+
+SendGrid
+Mailgun
+Amazon SES
+Google Workspace (Gmail API or SMTP with a custom domain)
+These providers help manage reputation and compliance automatically.
 
 # ref github
 https://github.com/bhrugen?tab=repositories

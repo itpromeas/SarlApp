@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using MVCWebApp.Utility;
 using Stripe;
 using MVCWebApp.DataAccess.DbInitializer;
+using MVCWebApp.Utility.Emails;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +59,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // for email
-builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddScoped<IEmailSender, EmailServiceMailKit>();
 
 var app = builder.Build();
 
